@@ -80,6 +80,7 @@ while (i < limit) {
   i <- i + 2
 }
 
+# to search for the largest prime divisor, we start from the end and go back until a divisor is found
 found <- FALSE
 i <- length(primes) + 1
 while (!found) {
@@ -89,3 +90,60 @@ while (!found) {
   }
 }
 primes[i]
+
+#####
+# Problem 4
+# Largest Palindrome Product
+# A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
+# Find the largest palindrome made from the product of two 3-digit numbers.
+
+# creating a function that returns if a number is palindrome
+is_palindrome <- function (n) {
+  original <- n
+  remaninder <- 0
+  reversed <- 0
+  
+  while (n != 0) {
+    remainder <- n %% 10
+    reversed <-  reversed * 10 + remainder
+    n <- n %/% 10 
+  }
+  return (original == reversed)
+}
+
+
+# creating a list of products i * j from 100 to 999 each
+for (i in 999:100) {
+  for (j in 999:100) {
+    list <- c(list, i*j)
+  }
+}
+
+#same here but with while loop
+list <- c()
+i <- 1000
+found <- FALSE
+while (i > 99 & !found) {
+  i <- i - 1
+  j <- 1000
+  while (j > 99 & !found) {
+    j <-  j - 1
+    list <- c(list, i*j)
+  }
+}
+
+#once created the list, we need to sort it (descending order)...
+list <- sort (list, decreasing = TRUE)
+
+#... and then return the largest number that is palindrome
+found <- FALSE
+i <- 0
+while (!found) {
+  i <- i + 1
+  found <- is_palindrome(list[i])
+}
+print (list[i])
+
+
+
+
