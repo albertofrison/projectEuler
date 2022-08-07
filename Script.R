@@ -172,3 +172,57 @@ while (!found) {
   }  
 }
 print (i)
+
+
+##### 
+# Problem 6
+# Sum Square Difference
+# The sum of the squares of the first ten natural numbers is, 1^2 + 2^2 + 3^2 ...
+# The square of the sum of the first ten natural numbers is, (1+2+3)^2
+# Hence the difference between the sum of the squares of the first ten natural numbers and the square of the sum is .
+# Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
+l <- c(1:100)
+sum (l)^2 - sum (l^2)
+
+
+##### 
+# Problem 7
+# 10001st Prime
+# By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is 13.
+# What is the 10 001st prime number?
+
+# recycling code from Problem 3
+
+primes <- c(2) # primes contains the list of prime numbers, 2 is here by definition
+i <-3 # 2 is already on the list, we start testing numbers from 3
+
+counter <- 1
+# this algorithm supposes i is PRIME and tries to find eventual divisors to disprove it
+while (counter < 10001) {
+  
+  prime <- TRUE
+  
+  # testing for even numbers
+  j <- 2
+  if (i %% j == 0) { prime <- FALSE }
+  
+  j <- j + 1 #3
+  
+  # testing for #3 and so on this trick allows for +2 increments in j instead to use + 1 increments
+  while (prime == TRUE & j <= sqrt (i)) {
+    if (i %% j == 0) {
+      prime <- FALSE
+    }
+    j <- j + 2
+  }
+  
+  # it PRIME is still TRUE here it means that is is really a prime number, so we add it to the list
+  if (prime == TRUE) {
+    primes <- c (primes, i)
+    counter <- counter + 1
+  }
+  
+  i <- i + 2 # next candidate, incremental steps by 2
+}
+
+primes[length(primes)]
