@@ -153,17 +153,22 @@ print (list[i])
 
 ##### 
 # Problem 5
-# Smallest Multipler
+# Smallest Multiplier
 # 2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder. 
 # What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
 
 found <- FALSE
-i <- 1
-j <- c(1:4)
+i <- 0
 
-i %% j
 while (!found) {
   i <- i + 1
-  found <- i %% j == 0
+  j <- 1
+  found <- TRUE
+  while (j < 21 & found) {
+    if (i %% j != 0) {
+      found <- FALSE
+    }
+    j <- j + 1
+  }  
 }
 print (i)
