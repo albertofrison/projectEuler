@@ -111,30 +111,36 @@ is_palindrome <- function (n) {
   return (original == reversed)
 }
 
-
 # creating a list of products i * j from 100 to 999 each
-for (i in 999:100) {
-  for (j in 999:100) {
-    list <- c(list, i*j)
+
+
+# this process creates a a list with all the i*j results
+list <- array(1000000)
+z <- 0 # index of the array
+for (i in 100:999) {
+  for (j in i:999) { # note: i*j = j*i, so it is not needed to build the whole matrix, j can start from i 
+    z <- z + 1 # next element
+    list [z] <- i*j # storing the result
   }
 }
 
-#same here but with while loop
-list <- c()
-i <- 1000
-found <- FALSE
-while (i > 99 & !found) {
-  i <- i - 1
-  j <- 1000
-  while (j > 99 & !found) {
-    j <-  j - 1
-    list <- c(list, i*j)
-  }
-}
+# same here but with while loop - no array pre-allocated - it will take ages to execute
+# read here how to speed up R code: https://www.r-bloggers.com/2016/01/strategies-to-speedup-r-code/
+# list <- c()
+# i <- 1000
+# found <- FALSE
+# while (i > 99 & !found) {
+#   i <- i - 1
+#   j <- 1000
+#   while (j > 99 & !found) {
+#     j <-  j - 1
+#     list <- c(list, i*j)
+#   }
+# }
 
 #once created the list, we need to sort it (descending order)...
 list <- sort (list, decreasing = TRUE)
-
+head(list)
 #... and then return the largest number that is palindrome
 found <- FALSE
 i <- 0
@@ -145,5 +151,19 @@ while (!found) {
 print (list[i])
 
 
+##### 
+# Problem 5
+# Smallest Multipler
+# 2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder. 
+# What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
 
+found <- FALSE
+i <- 1
+j <- c(1:4)
 
+i %% j
+while (!found) {
+  i <- i + 1
+  found <- i %% j == 0
+}
+print (i)
