@@ -288,39 +288,32 @@ ans # 31875000
 # The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
 # Find the sum of all the primes below two million.
 
-# recycling code from Problem 7
+# here we cannot recycle the code from Problem 7 - it would just take too long
+# implementing Sieve of Eratosthenes Algorithm
+max <- 1999999
 
-primes <- c(2) # primes contains the list of prime numbers, 2 is here by definition
-i <-3 # 2 is already on the list, we start testing numbers from 3
+list <- 1:max
+list [1] <- 0 
+p <- 2
 
-counter <- 1
-# this algorithm supposes i is PRIME and tries to find eventual divisors to disprove it
-while (counter < 2000000) {
-  
-  prime <- TRUE
-  
-  # testing for even numbers
-  j <- 2
-  if (i %% j == 0) { prime <- FALSE }
-  
-  j <- j + 1 #3
-  
-  # testing for #3 and so on this trick allows for +2 increments in j instead to use + 1 increments
-  while (prime == TRUE & j <= sqrt (i)) {
-    if (i %% j == 0) {
-      prime <- FALSE
+while (p^2 < max) {
+  for (i in ((p+1):max)) {
+    if (list[i] %% p == 0) {
+      list[i] <- 0
     }
-    j <- j + 2
   }
   
-  # it PRIME is still TRUE here it means that is is really a prime number, so we add it to the list
-  if (prime == TRUE) {
-    primes <- c (primes, i)
-    counter <- counter + 1
+  found <- FALSE
+  j <- p
+  while (!found) {
+    j <- j+1
+    if (list[j] != 0) {
+      found <- TRUE
+    }
   }
-  
-  i <- i + 2 # next candidate, incremental steps by 2
+  p <- j
 }
 
-ans <- sum (primes)
-ans # 104743
+ans <- sum(list)
+ans # 142913828922
+
