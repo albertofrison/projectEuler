@@ -236,7 +236,7 @@ ans # 104743
 list <- as.character ("7316717653133062491922511967442657474235534919493496983520312774506326239578318016984801869478851843858615607891129494954595017379583319528532088055111254069874715852386305071569329096329522744304355766896648950445244523161731856403098711121722383113622298934233803081353362766142828064444866452387493035890729629049156044077239071381051585930796086670172427121883998797908792274921901699720888093776657273330010533678812202354218097512545405947522435258490771167055601360483958644670632441572215539753697817977846174064955149290862569321978468622482839722413756570560574902614079729686524145351004748216637048440319989000889524345065854122758866688116427171479924442928230863465674813919123162824586178664583591245665294765456828489128831426076900422421902267105562632111110937054421750694165896040807198403850962455444362981230987879927244284909188845801561660979191338754992005240636899125607176060588611646710940507754100225698315520005593572972571636269561882670428252483600823257530420752963450")
 list <- strsplit(list, "")
 
-list <- unlist(lapply(list, strtoi))
+list <- unlist(lapply(list, strtoi)) 
 max <- 0
 
 for (i in c(1:(length(list)-13))) {
@@ -252,3 +252,75 @@ for (i in c(1:(length(list)-13))) {
 }
 ans <- max 
 ans #23514624000
+
+#####
+# Problem 9
+# Special Pitagorean Triplet
+# A Pythagorean triplet is a set of three natural numbers, a < b < c, for which a2 + b2 = c2
+# For example, 3^2 + 4^2 = 9 + 16 = 25 = 5^2.
+# There exists exactly one Pythagorean triplet for which a + b + c = 1000.
+# Find the product abc.
+
+i <- 1001
+found <- FALSE
+
+while (i > 1 & !found) {
+  i <- i - 1  
+  j <- i - 1
+  while (j > 1 & !found) {
+    j <- j - 1
+    z <- j - 1
+    while (z > 1 & !found) {
+      z <- z - 1
+      if ((z^2 + j^2 == i^2) & i + j + z == 1000){
+        found <- TRUE
+      }
+    } 
+  }
+}
+
+ans <- i*j*z
+ans # 31875000
+
+#####
+# Problem 10
+# Summation of Primes
+# The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
+# Find the sum of all the primes below two million.
+
+# recycling code from Problem 7
+
+primes <- c(2) # primes contains the list of prime numbers, 2 is here by definition
+i <-3 # 2 is already on the list, we start testing numbers from 3
+
+counter <- 1
+# this algorithm supposes i is PRIME and tries to find eventual divisors to disprove it
+while (counter < 2000000) {
+  
+  prime <- TRUE
+  
+  # testing for even numbers
+  j <- 2
+  if (i %% j == 0) { prime <- FALSE }
+  
+  j <- j + 1 #3
+  
+  # testing for #3 and so on this trick allows for +2 increments in j instead to use + 1 increments
+  while (prime == TRUE & j <= sqrt (i)) {
+    if (i %% j == 0) {
+      prime <- FALSE
+    }
+    j <- j + 2
+  }
+  
+  # it PRIME is still TRUE here it means that is is really a prime number, so we add it to the list
+  if (prime == TRUE) {
+    primes <- c (primes, i)
+    counter <- counter + 1
+  }
+  
+  i <- i + 2 # next candidate, incremental steps by 2
+}
+
+ans <- sum (primes)
+ans # 104743
